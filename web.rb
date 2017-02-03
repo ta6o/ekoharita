@@ -24,7 +24,7 @@ def fetch_content
   parse_content
   html = Haml::Engine.new(IO.read("#{Dir.pwd}/views/index.haml")).render
   File.open("#{Dir.pwd}/public/index.html","w") {|f| f << html}
-  ftp = Net::FTP.new("ftp://ekoharita.org")
+  ftp = Net::FTP.new("ekoharita.org")
   ftp.passive = true
   ftp.login("dunya2017ocak@ekoharita.org", "~=.#^PU~7waBebKXm4")
   ftp.puttextfile("#{Dir.pwd}/public/index.html")
