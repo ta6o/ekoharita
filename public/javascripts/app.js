@@ -1,0 +1,129 @@
+var map;
+var overlays = {};
+var overids = {};
+var fitBoundOpts = {animate:true};
+
+function initMap(markerdata) {
+  console.log(markerdata)
+  maxBounds = new L.LatLngBounds(new L.LatLng(34,16), new L.LatLng(48,46))
+  map = L.map('map',{
+    maxBounds: maxBounds,
+    zoom: 6,
+    center: maxBounds.getCenter()
+  })
+
+  map.removeControl(map.zoomControl)
+  L.control.zoom({position: 'topright'}).addTo(map);
+  map.removeControl(map.attributionControl)
+  L.control.attribution({position: 'bottomright'}).addTo(map);
+  map.setMaxBounds(maxBounds);
+
+  sat2009.addTo(map)
+  var lControl = L.control.layers(baseMaps, {}, {collapsed:true, position:"bottomright"}).addTo(map);
+
+  var HomeButton = L.Control.extend({
+    options: { position: 'topright' }, 
+    onAdd: function (map) {
+      var container = L.DomUtil.create('div', 'home-button leaflet-bar leaflet-control');
+      L.DomEvent.addListener(container, 'click', getBack);
+      return container;
+    }
+  });
+  map.addControl(new HomeButton());
+  $('.home-button').html('<div class=""><span/></div>')
+
+  markerLayer = L.featureGroup().addTo(map);
+  polygonLayer = L.featureGroup().addTo(map);
+  lineLayer = L.featureGroup().addTo(map);
+  markers = {};
+  $.each(markerdata, function(i,mark){
+    img = "<div style='height:0px'>&nbsp;</div>"
+    if (mark.logo.length > 0){
+      img = "<div style='float:left;max-width:200px;'><img src='"+mark.logo+"' style='max-width:100%;width:auto;height:100px;margin-right:12px'></div>"
+    }
+    url = "";
+    if (mark.url.length > 0){
+      url = "<a target='_blank' href='"+mark.url+"' style='text-decoration:none;'>Daha fazla bilgi</a> &nbsp; ";
+    }
+    popcontent = "<div class='clearfix'>"+img+"<div class='mod' data-slug='"+mark.slug+"'><h4 class='maplink' style='margin-top:0;'>"+mark.name+"</h4><p>"+mark.description.split(".")[0]+"...</p></div><br/><div style='position:absolute;bottom:10px;right:12px;font-size:11px;cursor: pointer;'>"+url+"<a class='zom' onclick='zom("+mark.id+")' data-slug='"+mark.id+"'>Yakınlaştır</a></div>";
+    popcontent += '';
+    var marker = L.marker([mark.latitude, mark.longitude],{
+      icon: L.icon({iconUrl:"/harita/img/"+mark.icon+".svg",iconSize: [32,32]}),
+      riseOnHover: true,
+    }).addTo(markerLayer);
+    marker.id = mark.id;
+    marker.name = mark.name;
+    marker.slug = mark.slug;
+    marker.slug_en = mark.slug_en;
+    marker.types = mark.types;
+    pop = L.popup({autoPanPaddingTopLeft:[300,24]}).setContent(popcontent);
+    marker.bindPopup(pop);
+    //$(dom).find('a.zom').on('click tap',zom);
+    markers[marker.id] = marker;
+  });
+  map.fitBounds(markerLayer.getBounds());
+  $('#cats').jScrollPane();
+  resize();
+}
+
+function resize() {
+  hh = parseInt($("#itms .cata").css("height"))+24;
+  $("#itms").css("height",Math.min(window.innerHeight,hh));
+  $('#cats, #itms > .cata').data("jsp").reinitialise();
+}
+
+$(window).on("resize",function(){resize();});
+$("#cats li.cat").on("mouseenter",function(){$("#cats").css("width",340)});
+$("#cats li.cat").on("mouseleave",function(){$("#cats").css("width",96)});
+
+$(".cat").on("click",function(){
+  slug = $(this).attr("id").replace(/^cat_/,"");
+  title = $(this).find(".title").text().trim();
+  html = "<div class='cata cat_"+slug+"'><a onclick='closeItems()' class='close-button'>x</a><h4>"+title+"</h4><hr/><ul>"
+  $.each($cats[slug],function(i,e) {
+    item = $content[parseInt(e)-1];
+    html += "<li><a data-id='"+item.id+"' onclick='show("+item.id+");'>"+item.name+"</a></li>"
+  })
+  html += "</ul></div>"
+  $("#itms").hide();
+  $("#itms").html(html);
+  map.closePopup();
+  $("#itms").slideDown(function(){
+    hh = parseInt($("#itms .cata").css("height"))+24;
+    $("#itms").css("height",Math.min(window.innerHeight,hh));
+  });
+})
+
+$("#itms").on("mouseenter",".cata li a",function(){
+    $(markers[$(this).data("id")]._icon).addClass("hover");
+})
+
+$("#itms").on("mouseleave",".cata li a",function(){
+  $("img.leaflet-marker-icon").removeClass("hover");
+})
+
+function zom(id){
+  m = markers[id];
+  map.setView(m._latlng,12,{animate:true});
+}
+
+function show(id) {
+  map.fitBounds(markerLayer.getBounds());
+  markers[id].openPopup();
+  $("#itms").slideUp();
+}
+
+function closeItems() {
+  $("#itms").slideUp();
+}
+
+function getBack() {
+  //map.fitBounds(vectorLayer.getBounds(),fitBoundOpts);
+  map.fitBounds(markerLayer.getBounds());
+}
+
+function popUp(marker) {
+  marker.openPopup();
+  //window.location = "#"+marker.slug;
+}
+

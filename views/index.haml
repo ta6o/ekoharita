@@ -1,0 +1,61 @@
+-# coding: utf-8
+!!!
+-@simage = @slug ? "#{$siteurl}/img/#{@code}.jpg" : "#{$siteurl}/img/S.jpg"
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no", :name => "viewport"}/
+    %link{:href=>'https://fonts.googleapis.com/css?family=Open+Sans:600&subset=latin,latin-ext',:rel=>'stylesheet',:type=>'text/css'}/
+    %title= $title
+
+    %meta{:content => @slug ? @title : $title, :name => "title"}/
+    %meta{:content => $description, :name => "description"}/
+    %meta{:content => $site_tags, :name => "keywords"}/
+    %meta{:content => "", :name => "author"}/
+
+    %link{:href => "/harita/stylesheets/leaflet.css?#{rand(1024)}", :rel => "stylesheet"}/
+    %link{:href => "/harita/stylesheets/app.css?#{rand(1024)}", :rel => "stylesheet"}/
+
+    %link{:rel=>"apple-touch-icon-precomposed",:href=>"/img/apple-touch-icon-152x152-precomposed.png"}
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    :css
+
+  %body{"data-offset" => "0", "data-spy" => "scroll", "data-target" => ".subnav"}
+    %ul#cats.scroll-pane
+      -$cats.each do |cat,arr|
+        %li.cat{:class=>"cat_#{cat}",:id=>"cat_#{cat}"}
+          .clearfix
+            %span.title{:style=>"background-image:url(/harita/img/#{cat.gsub('-','_')}.svg);"}= " &nbsp;  #{$cnms[cat]} &nbsp;"
+            %span.num= " #{arr.length} &nbsp; &nbsp;"
+    #itms
+
+    #map
+
+  %script{:src => "/harita/javascripts/main.js?#{rand(1024)}"}
+  %script{:src => "/harita/javascripts/app.js?#{rand(1024)}", :type=>"text/javascript"}
+  :javascript
+    var $content = #{$content.to_json};
+    var $cats = #{$cats.to_json};
+    var markers;
+
+    var tile = L.tileLayer.provider('Thunderforest.Transport', {minZoom: 4, maxZoom: 18, apikey:"819dee1c8f874141ad1f7cec78d2efc5"});
+    var terrain = L.tileLayer.provider('Thunderforest.OpenCycleMap', {minZoom: 4, maxZoom: 18, apikey:"819dee1c8f874141ad1f7cec78d2efc5"});
+    var sat2009 = L.tileLayer.provider('Esri.WorldImagery', {attribution: 'Tiles © Esri', minZoom: 4, maxZoom: 17, });
+
+    var baseMaps = {
+      "Uydu": sat2009,
+      "Fiziki": terrain,
+      "Sokak": tile,
+    };
+
+    clickinfo = "Künye için tıkla";
+    zoomin = "Yakınlaştır";
+    locale = "tr";
+    $(document).ready(function(){
+      initMap($content);
+      $(".zom").on("click", zom);
+    });
+
