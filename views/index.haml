@@ -25,11 +25,15 @@
 
   %body{"data-offset" => "0", "data-spy" => "scroll", "data-target" => ".subnav"}
     %ul#cats.scroll-pane
+      %li.cat.search#cat_arama
+        .clearfix
+          %span.title{:style=>"background-image:url(/harita/img/search.svg);color:#455a64;"} &nbsp; Arama&nbsp; &nbsp;
+          %span.num
       -$cats.each do |cat,arr|
         %li.cat{:class=>"cat_#{cat}",:id=>"cat_#{cat}"}
           .clearfix
             %span.title{:style=>"background-image:url(/harita/img/#{cat.gsub('-','_')}.svg);"}= " &nbsp;  #{$cnms[cat]} &nbsp;"
-            %span.num= " #{arr.length} &nbsp; &nbsp;"
+            %span.num= " #{arr.length}&nbsp;  &nbsp;"
     #itms
 
     #map
@@ -39,6 +43,7 @@
   :javascript
     var $content = #{$content.to_json};
     var $cats = #{$cats.to_json};
+    $cats["arama"] = [];
     var markers;
 
     var tile = L.tileLayer.provider('Thunderforest.Transport', {minZoom: 4, maxZoom: 18, apikey:"819dee1c8f874141ad1f7cec78d2efc5"});

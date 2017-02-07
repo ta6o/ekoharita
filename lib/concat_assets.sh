@@ -1,6 +1,6 @@
 #!/bin/bash          
 cd ../public/javascripts/
-cat jquery.js leaflet.js leaflet.providers.js scrollpane.js app.js > all.js
+cat jquery.js leaflet.js leaflet.providers.js scrollpane.js lunr.min.js > all.js
 java -jar ../../lib/yui.jar --type js all.js > main.js
 
 cd ../stylesheets/
