@@ -85,10 +85,9 @@ end
 $content = []
 $cats = {}
 $cnms = {"ekolojik-yerleske"=>"Ekolojik yerleşke","kent-bostani"=>"Kent bostanı","kolektif-inisiyatif"=>"Kolektif & İnisiyatif","ekolojik-pazar-gida-toplulugu"=>"Ekolojik pazar & Gıda topluluğu","botanik-bahce"=>"Botanik bahçe","alternatif-okul-egitim"=>"Alternatif okul & Eğitim","ciftlik-eko-girisim"=>"Çiftlik & Eko-girişim","stk"=>"STK","alternatif-ekonomiler"=>"Alternatif ekonomiler","bilgi-bankasi-blog"=>"Bilgi bankası & Blog","balkon-bahce"=>"Balkon - Bahçe","muze"=>"Müze","milli-park"=>"Milli park","ekolojik-mimari"=>"Ekolojik mimari","ekoturizm-kamp"=>"Ekoturizm - Kamp"}
-$title = "Türkiye'de Çocuklar"
-$siteurl = "http://turkiyedecocuklar.org"
-$description = "Aydın Doğan Vakfı ve TESEV iş birliğiyle hazırlanan ve Türkiye’deki çocuklar ile ilgili demografik, sosyal ve ekonomik verileri derleyen görsel veri bankası"
-$tweettext = "Türkiye’deki çocuklarla ilgili görsel veri bankası @adoganvakfi ve @TESEV2015 işbirliği"
+$title = "Ekoloji Haritası"
+$siteurl = "https://www.ekoharita.org"
+$description = "Türkiye'nin ekoloji haritası"
 
 parse_content
 
