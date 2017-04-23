@@ -95,7 +95,9 @@ $(".cat").on("click tap",function(){
   }
   $.each($cats[slug],function(i,e) {
     item = $content[parseInt(e)-1];
-    html += "<li><a data-id='"+item.id+"' onclick='show("+item.id+");'>"+item.name+"</a></li>"
+    if (typeof item != "undefined") {
+      html += "<li><a data-id='"+item.id+"' onclick='show("+item.id+");'>"+item.name+"</a></li>"
+    }
   })
   html += "</ul></div>"
   $(this).find(".title").css("max-width",8).css("background-color","#efefef")
