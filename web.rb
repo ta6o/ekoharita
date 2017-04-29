@@ -28,6 +28,7 @@ def fetch_content
   ftp.passive = true
   ftp.login("dunya2017ocak@ekoharita.org", "~=.#^PU~7waBebKXm4")
   ftp.puttextfile("#{Dir.pwd}/public/index.html")
+  ftp.puttextfile("#{Dir.pwd}/public/javascripts/app.js")
   ftp.close
   true
 end
