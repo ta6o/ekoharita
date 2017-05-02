@@ -30,6 +30,7 @@
           %span.title{:style=>"background-image:url(/harita/img/search.svg);color:#455a64;"} &nbsp; Arama&nbsp; &nbsp;
           %span.num
       -$cats.each do |cat,arr|
+        -next if arr == []
         %li.cat{:class=>"cat_#{cat}",:id=>"cat_#{cat}"}
           .clearfix
             %span.title{:style=>"background-image:url(/harita/img/#{cat.gsub('-','_')}.svg);"}= " &nbsp;  #{$cnms[cat]} &nbsp;"
