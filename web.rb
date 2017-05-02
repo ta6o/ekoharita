@@ -28,7 +28,8 @@ def fetch_content
   ftp.passive = true
   ftp.login("dunya2017ocak@ekoharita.org", "~=.#^PU~7waBebKXm4")
   ftp.puttextfile("#{Dir.pwd}/public/index.html")
-  #ftp.puttextfile("#{Dir.pwd}/public/javascripts/app.js")
+  ftp.chdir("javascripts")
+  ftp.puttextfile("#{Dir.pwd}/public/javascripts/app.js")
   ftp.close
   true
 end
@@ -47,9 +48,9 @@ def parse_content
     row.each_with_index do |c,i|
       x[header[i]] = c
     end
+    x["id"] = ind+1
     $cats[x["category"].slug] << x["id"]
     x["icon"] = x["category"].to_ascii.downcase.gsub(/(-|\s|&|_)+/,"_")
-    x["id"] = ind+1
     $content << x
   end
   nil
