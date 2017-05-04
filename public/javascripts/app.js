@@ -68,7 +68,7 @@ function initMap(markerdata) {
     //$(dom).find('a.zom').on('click tap',zom);
     markers[marker.id] = marker;
   });
-  setTimeout(100,showAll);
+  setTimeout(showAll,100);
   $('#cats').jScrollPane();
   resize();
 }
