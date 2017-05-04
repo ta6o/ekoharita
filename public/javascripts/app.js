@@ -6,7 +6,7 @@ var fitBoundOpts = {animate:true};
 
 function initMap(markerdata) {
   //console.log(markerdata)
-  maxBounds = new L.LatLngBounds(new L.LatLng(30,10), new L.LatLng(50,50))
+  maxBounds = new L.LatLngBounds(new L.LatLng(30,10), new L.LatLng(52,52))
   map = L.map('map',{
     maxBounds: maxBounds,
     zoom: 6,
