@@ -143,7 +143,7 @@ function zom(id){
 
 function show(id) {
   //map.fitBounds(markerLayer.getBounds());
-  map.setView(markers[id]._latlng,8)
+  map.setView(markers[id]._latlng,9)
   markers[id].openPopup();
   //map.panBy([0,$(".leaflet-popup").height() * -0.75])
   //$("#itms").slideUp();
