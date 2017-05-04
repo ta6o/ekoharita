@@ -6,7 +6,7 @@ var fitBoundOpts = {animate:true};
 
 function initMap(markerdata) {
   //console.log(markerdata)
-  maxBounds = new L.LatLngBounds(new L.LatLng(34,16), new L.LatLng(48,46))
+  maxBounds = new L.LatLngBounds(new L.LatLng(30,10), new L.LatLng(50,50))
   map = L.map('map',{
     maxBounds: maxBounds,
     zoom: 6,
@@ -142,8 +142,10 @@ function zom(id){
 }
 
 function show(id) {
-  map.fitBounds(markerLayer.getBounds());
+  //map.fitBounds(markerLayer.getBounds());
+  map.setView(markers[id]._latlng,8)
   markers[id].openPopup();
+  //map.panBy([0,$(".leaflet-popup").height() * -0.75])
   //$("#itms").slideUp();
 }
 
