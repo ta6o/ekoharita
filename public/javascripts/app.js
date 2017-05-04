@@ -8,9 +8,7 @@ function initMap(markerdata) {
   //console.log(markerdata)
   maxBounds = new L.LatLngBounds(new L.LatLng(30,10), new L.LatLng(52,52))
   map = L.map('map',{
-    maxBounds: maxBounds,
-    zoom: 6,
-    center: maxBounds.getCenter()
+    maxBounds: maxBounds
   })
 
   map.removeControl(map.zoomControl)
@@ -70,9 +68,13 @@ function initMap(markerdata) {
     //$(dom).find('a.zom').on('click tap',zom);
     markers[marker.id] = marker;
   });
-  map.fitBounds(markerLayer.getBounds());
+  setTimeout(100,showAll);
   $('#cats').jScrollPane();
   resize();
+}
+
+function showAll() {
+  map.fitBounds(markerLayer.getBounds());
 }
 
 function resize() {
