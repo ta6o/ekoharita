@@ -8,12 +8,14 @@ require 'csv'
 require 'pp'
 require 'net/ftp'
 
+$session = nil
+
 def fetch_content
   require "google_drive"
   api_id = "753249404251-c0gce19t01sgikh28uspc98g7cfl7oqf.apps.googleusercontent.com"
   api_key = "sLs8OOc_zcsPyWWllTMItH4L"
-  session = GoogleDrive.saved_session("./stored_token.json", nil, api_id, api_key)
-  file = session.spreadsheet_by_key("12mVbD5X1N9E2H5LDvscpxSOIossxI3j6Mnin5QbieCk")
+  $session = GoogleDrive.saved_session("./stored_token.json", nil, api_id, api_key)
+  file = $session.spreadsheet_by_key("12mVbD5X1N9E2H5LDvscpxSOIossxI3j6Mnin5QbieCk")
   file.worksheets.each do |ws|
     CSV.open("#{Dir.pwd}/lib/#{ws.title}.csv","w") do |csv|
       ws.rows.each do |row|
