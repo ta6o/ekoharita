@@ -28,7 +28,7 @@ def fetch_content
   File.open("#{Dir.pwd}/public/index.html","w") {|f| f << html}
   ftp = Net::FTP.new("ekoharita.org")
   ftp.passive = true
-  ftp.login("dunya2017ocak@ekoharita.org", "~=.#^PU~7waBebKXm4")
+  ftp.login(ENV["ftp_user"],ENV["ftp_password"])
   ftp.puttextfile("#{Dir.pwd}/public/index.html")
   ftp.chdir("javascripts")
   ftp.puttextfile("#{Dir.pwd}/public/javascripts/app.js")
