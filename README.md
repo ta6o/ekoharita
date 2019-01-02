@@ -18,6 +18,12 @@ $ gem install bundler
 $ bundle install #on project root directory
 ```
 
+And start the server:
+
+```
+$ rackup config.ru
+```
+
 
 
 Content management
@@ -31,11 +37,15 @@ production server.
 
 Easiest way to do it is to open an interactive console with the app loaded:
 
-```  $ tux```
+```
+$ tux
+```
 
 and run the method to update the contents from the spreadsheet:
 
-``` >> fetch_content```
+```
+>> fetch_content
+```
 
 On this step the **google_drive** gem (Ruby library) will provide a link to
 authenticate. Just open and follow the steps to get the auth token and paste it
