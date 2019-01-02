@@ -11,6 +11,15 @@ Please check [rbenv](https://github.com/rbenv/rbenv) or [rvm](https://rvm.io)
 for this. Note that you can also use system Ruby for development, but make sure
 you're on a safe and stable version. (>= 2.4.\*)
 
+Then you just use the **bundler** gem to install library files:
+
+``` 
+$ gem install bundler
+$ bundle install #on project root directory
+```
+
+
+
 Content management
 =====
 
