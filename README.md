@@ -21,8 +21,11 @@ $ bundle install #on project root directory
 And start the server:
 
 ```
-$ rackup config.ru
+$ ruby web.rb
 ```
+
+Check the port shown on the console (probably 4567) and navigate there on your
+browser, like **http://localhost:4567** .
 
 
 
